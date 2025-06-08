@@ -52,7 +52,7 @@ sed -i "s/DISTRIB_DESCRIPTION='*.*'/DISTRIB_DESCRIPTION='iStoreOS-$(date +%Y%m%d
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-files/files/etc/openwrt_release
 
 # 移除要替换的包
-rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,socat}
+rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 # rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/third_party/luci-app-LingTiGameAcc
@@ -108,9 +108,10 @@ function merge_package() {
 
 
 git_sparse_clone main https://github.com/Jaykwok2999/socat luci-app-socat
-git_sparse_clone main https://github.com/Jaykwok2999/socat socat
 git_sparse_clone main https://github.com/Jaykwok2999/istoreos-theme luci-app-argon-config
 git_sparse_clone main https://github.com/Jaykwok2999/istoreos-ota luci-app-ota
+git_sparse_clone main https://github.com/Jaykwok2999/istoreos-ota fw_download_tool
+
 
 # golong1.24.2依赖
 rm -rf feeds/packages/lang/golang
