@@ -61,8 +61,8 @@ rm -rf feeds/istoreos_ipk/op-daed
 rm -rf feeds/istoreos_ipk/patch/istoreos-files
 rm -rf feeds/istoreos_ipk/vlmcsd
 rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
-rm -rf package/diy/luci-app-ota
-rm -rf feeds/istoreos_ipk/naiveproxy
+
+
 
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
@@ -105,7 +105,6 @@ function merge_package() {
     done
     cd "$rootdir"
 }
-
 
 git_sparse_clone main https://github.com/Jaykwok2999/socat luci-app-socat
 git_sparse_clone main https://github.com/Jaykwok2999/istoreos-theme luci-app-argon-config
