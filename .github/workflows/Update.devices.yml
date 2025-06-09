@@ -38,9 +38,9 @@ jobs:
         
         
          
-        git clone https://github.com/kiddin9/Kwrt.git ./devices
-        #mv ./Kwrt/devices ./
-        #rm -rf ./kwrt
+        git clone https://github.com/kiddin9/Kwrt.git -b master ./devices/tmp
+        mv ./devices/tmp/devices ./devices
+        rm -rf ./devices/tmp
         
         
         
