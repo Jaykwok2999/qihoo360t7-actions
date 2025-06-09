@@ -93,38 +93,6 @@ jobs:
         echo "DEVICE_SUBTARGET=$DEVICE_SUBTARGET" >> $GITHUB_ENV
         echo "FIRMWARE_VERSION=$(date +"%Y.%m.%d")" >> $GITHUB_ENV
 
-    - name: Load Settings.ini
-      run: |
-        echo ${{matrix.target}}
-        source "${GITHUB_WORKSPACE}/devices/common/settings.ini"
-        if [ -f "devices/${{matrix.target}}/settings.ini" ]; then
-          source "${GITHUB_WORKSPACE}/devices/${{matrix.target}}/settings.ini"
-        fi
-        echo "REPO_URL=${REPO_URL}" >> $GITHUB_ENV
-        echo "REPO_BRANCH=${REPO_BRANCH}" >> $GITHUB_ENV
-        echo "CONFIG_FILE=${CONFIG_FILE}" >> $GITHUB_ENV
-        echo "DIY_SH=${DIY_SH}" >> $GITHUB_ENV
-        echo "FREE_UP_DISK=${FREE_UP_DISK}" >> $GITHUB_ENV
-        echo "UPLOAD_BIN_DIR_FOR_ARTIFACT=${UPLOAD_BIN_DIR_FOR_ARTIFACT}" >> $GITHUB_ENV
-        echo "UPLOAD_FIRMWARE_FOR_ARTIFACT=${UPLOAD_FIRMWARE_FOR_ARTIFACT}" >> $GITHUB_ENV
-        echo "UPLOAD_FIRMWARE_FOR_RELEASE=${UPLOAD_FIRMWARE_FOR_RELEASE}" >> $GITHUB_ENV
-        echo "UPLOAD_FIRMWARE_TO_COWTRANSFER=${UPLOAD_FIRMWARE_TO_COWTRANSFER}" >> $GITHUB_ENV
-        echo "UPLOAD_FIRMWARE_TO_WETRANSFER=${UPLOAD_FIRMWARE_TO_WETRANSFER}" >> $GITHUB_ENV
-        sed -i "1a TARGET=${{matrix.target}}" ${GITHUB_WORKSPACE}/devices/common/diy.sh
-        if [ ${{matrix.target}} == "x86_64" ]; then
-            echo "ARCH=linux/amd64" >> $GITHUB_ENV
-            echo "MTARGET=x86_64" >> $GITHUB_ENV
-        elif [[ ${{matrix.target}} =~ (armsr_armv8|qualcommax_ipq807x|mediatek_mt7622|mediatek_mt7981|mediatek_filogic|bcm27xx_bcm2710|qualcommax_ipq60xx|bcm4908_generic|sunxi_cortexa53) ]]; then
-            echo "MTARGET=aarch64_cortex-a53" >> $GITHUB_ENV
-        else
-          echo "ARCH=linux/arm64" >> $GITHUB_ENV
-          if [[ ${{matrix.target}} == "bcm27xx_bcm2711" ]]; then
-            echo "MTARGET=aarch64_cortex-a72" >> $GITHUB_ENV
-          elif [[ ${{matrix.target}} == rockchip* ]]; then
-            echo "MTARGET=aarch64_generic" >> $GITHUB_ENV
-          fi
-        fi
-
     - name: 缓存工具链
       if: env.CACHE_TOOLCHAIN == 'true'
       uses: HiGarfield/cachewrtbuild@main
