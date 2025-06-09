@@ -4,6 +4,21 @@ wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/mosdns > files/etc/config/mosdns
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/smartdns > files/etc/config/smartdns
 
+shopt -s extglob
+SHELL_FOLDER=$(dirname $(readlink -f "$0"))
+
+#bash $SHELL_FOLDER/../common/kernel_6.6.sh
+
+sed -i '/bootargs-.* = ".*root=\/dev\/fit0 rootwait";/d' target/linux/mediatek/dts/*
+
+find target/linux/mediatek/filogic/base-files/ -type f -exec sed -i "s/-stock//g" {} \;
+find target/linux/mediatek/base-files/ -type f -exec sed -i "s/-stock//g" {} \;
+
+sed -i "s/-stock//g" package/boot/uboot-envtools/files/mediatek_filogic
+
+sed -i "s/openwrt-mediatek-filogic/openwrt-mediatek-filogic/g" target/linux/mediatek/image/filogic.mk
+sed -i "s/ fitblk / /g" target/linux/mediatek/image/filogic.mk
+
 # 修改默认IP
 sed -i 's/192.168.100.1/192.168.5.1/g' package/istoreos-files/Makefile
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
