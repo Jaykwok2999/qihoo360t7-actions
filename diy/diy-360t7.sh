@@ -7,7 +7,7 @@ wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/
 # 修改默认IP
 sed -i 's/192.168.100.1/192.168.5.1/g' package/istoreos-files/Makefile
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
-
+sed -i "1a TARGET=mediatek_filogic" ${GITHUB_WORKSPACE}/devices/common/diy.sh
 # TTYD
 sed -i 's/services/system/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 
