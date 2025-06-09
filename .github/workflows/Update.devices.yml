@@ -34,12 +34,12 @@ jobs:
     - name: Update
       run: |
 
-        rm -rf ./devices
+        rm -rf ./
         
         
          
         git clone --depth=1 https://github.com/kiddin9/Kwrt.git -b master
-        mv ./kwrt/devices ./devices/
+        mv ./Kwrt/devices ./
         rm -rf ./kwrt
         
         
