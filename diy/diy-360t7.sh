@@ -151,6 +151,10 @@ pushd
    curl -sSL https://raw.githubusercontent.com/Jaykwok2999/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
 popd
 
+pushd
+   curl -sSL https://raw.githubusercontent.com/Jaykwok2999/qihoo360t7-actions/refs/heads/main/devices/mediatek_filogic/patches/01-360t7.patch | patch -p1
+popd
+
 # NTP
 sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
 sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' package/base-files/files/bin/config_generate
