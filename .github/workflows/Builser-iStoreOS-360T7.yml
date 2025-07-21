@@ -1,4 +1,4 @@
-name: Builser-istoreos-24.10-X86_64
+name: Builser-istoreos-24.10-360t7
 
 on: 
   repository_dispatch:
