@@ -16,4 +16,4 @@
 # Add a feed source
 echo 'src-git istoreos_ipk https://github.com/Jaykwok2999/istoreos-ipk.git;main' >>feeds.conf.default  
 echo 'src-git theme https://github.com/Jaykwok2999/openwrt-theme.git;main' >>feeds.conf.default
-echo 'src-git turboacc https://github.com/chenmozhijin/turboacc.git;luci' >>feeds.conf.default
+#echo 'src-git turboacc https://github.com/chenmozhijin/turboacc.git;luci' >>feeds.conf.default
