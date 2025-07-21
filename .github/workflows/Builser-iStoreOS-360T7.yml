@@ -102,7 +102,7 @@ jobs:
       if: env.UPLOAD_FIRMWARE == 'true' && !cancelled()
       run: |
         cd openwrt/bin/targets/*/*
-        mv -f $OPENWRT_PATH/bin/packages/*/*/*.ipk packages
+        mv -f openwrt/bin/packages/*/*/*.ipk packages
         tar -zcf Packages.tar.gz packages
         rm -rf feeds.buildinfo version.buildinfo config.buildinfo
         echo "FIRMWARE=$PWD" >> $GITHUB_ENV
