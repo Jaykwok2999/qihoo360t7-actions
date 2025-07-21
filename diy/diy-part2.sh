@@ -24,8 +24,6 @@ rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,socat,min
 # rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
 rm -rf feeds/luci/applications/luci-app-upnp
 rm -rf feeds/packages/utils/v2dat
-rm -rf feeds/third_party/luci-app-LingTiGameAcc
-rm -rf feeds/third_party/luci-app-socat
 rm -rf feeds/istoreos_ipk/op-daed
 rm -rf feeds/istoreos_ipk/patch/istoreos-files
 rm -rf feeds/istoreos_ipk/vlmcsd
@@ -35,10 +33,7 @@ rm -rf package/diy/luci-app-ota
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/luci/applications/luci-app-argon-config
-rm -rf feeds/third/luci-theme-argon
-rm -rf feeds/third/luci-app-argon-config
 rm -rf feeds/istoreos_ipk/theme/luci-theme-argon
-rm -rf feeds/luci/applications/luci-app-dockerman
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
@@ -76,8 +71,8 @@ function merge_package() {
 
 
 git_sparse_clone main https://github.com/Jaykwok2999/openwrt-theme luci-app-argon-config
-git_sparse_clone main https://github.com/Jaykwok2999/istoreos-ota luci-app-ota
-git_sparse_clone main https://github.com/zijieKwok/github-ota fw_download_tool
+#git_sparse_clone main https://github.com/Jaykwok2999/istoreos-ota luci-app-ota
+#git_sparse_clone main https://github.com/zijieKwok/github-ota fw_download_tool
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-dockerman
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-upnp
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages miniupnpd
