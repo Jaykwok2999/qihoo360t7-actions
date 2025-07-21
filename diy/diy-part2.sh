@@ -116,14 +116,6 @@ cp -af feeds/istoreos_ipk/patch/un.svg package/luci-app-passwall/root/www/luci-s
 rm -rf feeds/packages/utils/unzip
 git clone https://github.com/sbwml/feeds_packages_utils_unzip feeds/packages/utils/unzip
 
-# 必要的补丁
-pushd feeds/luci
-   curl -s https://raw.githubusercontent.com/oppen321/path/refs/heads/main/Firewall/0001-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
-popd
-
-pushd
-   curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
-popd
 
 # NTP
 sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
