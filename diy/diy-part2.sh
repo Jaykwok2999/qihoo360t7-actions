@@ -20,15 +20,38 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-files/files/etc/openwrt_release
 
 # 移除要替换的包
-rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,socat,miniupnpd}
-# rm -rf feeds/packages/net/alist feeds/luci/applications/luci-app-alist
+rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box}
 rm -rf feeds/luci/applications/luci-app-upnp
+rm -rf feeds/luci/applications/luci-app-openclash
+rm -rf feeds/luci/applicationsluci-app-passwall
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/istoreos_ipk/op-daed
 rm -rf feeds/istoreos_ipk/patch/istoreos-files
 rm -rf feeds/istoreos_ipk/vlmcsd
 rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
+rm -rf feeds/packages/net/{shadowsocksr-libev-ssr-check,shadowsocksr-libev-ssr-local,shadowsocksr-libev-ssr-redir,shadowsocksr-libev-ssr-server}
+# 将packages源的相关文件替换成passwall_packages源的
+rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-passwall
+rm -rf feeds/istoreos_ipk/geoview
+rm -rf feeds/istoreos_ipk/xray-core
+rm -rf feeds/istoreos_ipk/sing-box
+rm -rf feeds/istoreos_ipk/chinadns-ng
+rm -rf feeds/istoreos_ipk/microsocks
+rm -rf feeds/istoreos_ipk/dns2socks
+rm -rf feeds/istoreos_ipk/ipt2socks
+rm -rf package/feeds/istoreos_ipk/vlmcsd
+rm -rf feeds/istoreos_ipk/vlmcsd
+rm -rf feeds/istoreos_ipk/vlmcsd
+rm -rf feeds/packages/net/xray-core
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/packages/net/v2ray-geodata
+rm -rf feeds/packages/net/v2ray-geoip
+rm -rf feeds/packages/net/sing-box
+rm -rf feeds/packages/net/chinadns-ng
+rm -rf feeds/packages/net/dns2socks
+rm -rf feeds/packages/net/dns2tcp
+rm -rf feeds/packages/net/microsocks
 
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
@@ -73,9 +96,7 @@ function merge_package() {
 git_sparse_clone main https://github.com/Jaykwok2999/openwrt-theme luci-app-argon-config
 #git_sparse_clone main https://github.com/Jaykwok2999/istoreos-ota luci-app-ota
 #git_sparse_clone main https://github.com/zijieKwok/github-ota fw_download_tool
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-dockerman
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-upnp
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages miniupnpd
+
 
 rm -rf feeds/istoreos_ipk/luci-app-openclash
 git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
