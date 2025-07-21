@@ -155,9 +155,9 @@ sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/f
 sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
 
 # 更改时间戳
-rm -rf scripts/get_source_date_epoch.sh
-cp -af feeds/istoreos_ipk/patch/get_source_date_epoch.sh scripts/
-chmod +x scripts/get_source_date_epoch.sh
+#rm -rf scripts/get_source_date_epoch.sh
+#cp -af feeds/istoreos_ipk/patch/get_source_date_epoch.sh scripts/
+#chmod +x scripts/get_source_date_epoch.sh
 
 # 更改 banner
 rm -rf package/base-files/files/etc/banner
