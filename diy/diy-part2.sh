@@ -32,17 +32,6 @@ rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
 rm -rf feeds/packages/net/{shadowsocksr-libev-ssr-check,shadowsocksr-libev-ssr-local,shadowsocksr-libev-ssr-redir,shadowsocksr-libev-ssr-server}
 # 将packages源的相关文件替换成passwall_packages源的
-rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-passwall
-rm -rf feeds/istoreos_ipk/geoview
-rm -rf feeds/istoreos_ipk/xray-core
-rm -rf feeds/istoreos_ipk/sing-box
-rm -rf feeds/istoreos_ipk/chinadns-ng
-rm -rf feeds/istoreos_ipk/microsocks
-rm -rf feeds/istoreos_ipk/dns2socks
-rm -rf feeds/istoreos_ipk/ipt2socks
-rm -rf package/feeds/istoreos_ipk/vlmcsd
-rm -rf feeds/istoreos_ipk/vlmcsd
-rm -rf feeds/istoreos_ipk/vlmcsd
 rm -rf feeds/packages/net/xray-core
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/packages/net/v2ray-geodata
@@ -112,11 +101,6 @@ git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/l
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-passwall
 cp -af feeds/istoreos_ipk/patch/un.svg package/luci-app-passwall/root/www/luci-static/passwall/flags/
 
-# unzip
-rm -rf feeds/packages/utils/unzip
-git clone https://github.com/sbwml/feeds_packages_utils_unzip feeds/packages/utils/unzip
-
-
 # NTP
 sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
 sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' package/base-files/files/bin/config_generate
@@ -133,8 +117,8 @@ rm -rf package/base-files/files/etc/banner
 cp -af feeds/istoreos_ipk/patch/istoreos-24.10/banner package/base-files/files/etc/
 
 # tailscale
-rm -rf feeds/packages/net/tailscale
-sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
+#rm -rf feeds/packages/net/tailscale
+#sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
 
 
 
