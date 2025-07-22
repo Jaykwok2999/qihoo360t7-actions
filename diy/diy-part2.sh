@@ -31,16 +31,13 @@ rm -rf feeds/istoreos_ipk/vlmcsd
 rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
 rm -rf feeds/packages/net/{shadowsocksr-libev-ssr-check,shadowsocksr-libev-ssr-local,shadowsocksr-libev-ssr-redir,shadowsocksr-libev-ssr-server}
-# 将packages源的相关文件替换成passwall_packages源的
-rm -rf feeds/packages/net/xray-core
-rm -rf feeds/packages/net/mosdns
-rm -rf feeds/packages/net/v2ray-geodata
-rm -rf feeds/packages/net/v2ray-geoip
-rm -rf feeds/packages/net/sing-box
-rm -rf feeds/packages/net/chinadns-ng
-rm -rf feeds/packages/net/dns2socks
-rm -rf feeds/packages/net/dns2tcp
-rm -rf feeds/packages/net/microsocks
+# 移除 openwrt feeds 自带的核心库
+rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
+
+# 更新 golang 1.25 版本
+rm -rf feeds/packages/lang/golang
+git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
