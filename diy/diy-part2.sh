@@ -21,6 +21,7 @@ sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-
 
 # 移除要替换的包
 rm -rf feeds/luci/applications/luci-app-upnp
+rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-openclash
 rm -rf feeds/luci/applicationsluci-app-passwall
 rm -rf feeds/packages/utils/v2dat
@@ -36,7 +37,6 @@ git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwal
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/luci/applications/luci-app-argon-config
-rm -rf feeds/istoreos_ipk/theme/luci-theme-argon
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
