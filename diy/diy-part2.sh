@@ -94,8 +94,8 @@ git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwallpackages
 
 # golong1.25.x依赖
-rm -rf feeds/packages/lang/golang
-git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+#rm -rf feeds/packages/lang/golang
+#git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
 # SSRP & Passwall
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-passwall
