@@ -6,7 +6,10 @@ wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/smartdns > files/etc/config/smartdns
 
 # 修改默认IP
-sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
+sed -i 's/192.168.6.1/192.168.5.1/g' package/base-files/files/bin/config_generate
+sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
+rm -rf include/version.mk
+cp -af feeds/istoreos_ipk/patch/version.mk include/
 
 # 修改默认密码
 sed -i 's/root:::0:99999:7:::/root:$1$5mjCdAB1$Uk1sNbwoqfHxUmzRIeuZK1:0:0:99999:7:::/g' package/base-files/files/etc/shadow
