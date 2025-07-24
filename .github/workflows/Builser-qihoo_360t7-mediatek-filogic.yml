@@ -235,16 +235,16 @@ jobs:
             };
 
             const fs = require('fs');
-            fs.mkdirSync('tmp-main', { recursive: true });
-            fs.writeFileSync('tmp-main/fw.json', JSON.stringify(json, null, 4));
+            fs.mkdirSync('tmp-api', { recursive: true });
+            fs.writeFileSync('tmp-api/fw.json', JSON.stringify(json, null, 4));
 
-      - name: 检出API分支
+      - name: Checkout api branch
         run: |
-          git fetch origin main:main
-          git checkout main
-          cp tmp-main/fw.json .
+          git fetch origin api:api
+          git checkout api
+          cp tmp-api/fw.json .
           git config user.name "actions-user"
           git config user.email "actions@github.com"
           git add fw.json
           git commit -m "Update fw.json @ $(date +'%Y-%m-%d')" || echo "No changes to commit"
-          git push origin main
+          git push origin api
