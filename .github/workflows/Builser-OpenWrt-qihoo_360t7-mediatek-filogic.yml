@@ -11,7 +11,7 @@ on:
 env:
   REPO_URL: https://github.com/immortalwrt/immortalwrt.git
   REPO_BRANCH: openwrt-24.10
-  CONFIG_FILE: config/qihoo_360t7-OpenWrt.config
+  CONFIG_FILE: configs/qihoo_360t7-OpenWrt.config
   DIY_SCRIPT: diy/diy-OpenWrt.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
