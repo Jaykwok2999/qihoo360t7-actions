@@ -88,11 +88,6 @@ function merge_package() {
 }
 
 
-#git_sparse_clone main https://github.com/Jaykwok2999/openwrt-theme luci-app-argon-config
-#git_sparse_clone main https://github.com/Jaykwok2999/istoreos-ota luci-app-ota
-#git_sparse_clone main https://github.com/zijieKwok/github-ota fw_download_tool
-
-
 rm -rf feeds/istoreos_ipk/luci-app-openclash
 git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
