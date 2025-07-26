@@ -27,7 +27,7 @@ sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-
 rm -rf feeds/luci/applications/luci-app-upnp
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-openclash
-rm -rf feeds/luci/applicationsluci-app-passwall
+rm -rf feeds/luci/applications/luci-app-passwall
 rm -rf feeds/packages/utils/v2dat
 rm -rf feeds/istoreos_ipk/op-daed
 rm -rf feeds/istoreos_ipk/patch/istoreos-files
@@ -115,7 +115,7 @@ chmod +x scripts/get_source_date_epoch.sh
 
 # 更改 banner
 rm -rf package/base-files/files/etc/banner
-cp -af feeds/istoreos_ipk/patch/istoreos-24.10/banner package/base-files/files/etc/
+cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
 
 # tailscale
 rm -rf feeds/packages/net/tailscale
