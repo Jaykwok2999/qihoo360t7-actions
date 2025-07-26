@@ -186,3 +186,5 @@ jobs:
           🌐 默认地址: 192.168.5.1
           👤 用户名: root
           🔒 默认密码: password
+          🛜 WiFi名称：OpenWrt_2.4G  OpenWrt_5G
+          🛜 WiFi密码：12345678
