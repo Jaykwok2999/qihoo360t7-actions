@@ -9,6 +9,7 @@ wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/
 
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
+sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
 rm -rf include/version.mk
 cp -af feeds/istoreos_ipk/patch/version.mk include/
 
