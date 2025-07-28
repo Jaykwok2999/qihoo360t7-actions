@@ -28,6 +28,9 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-files/files/etc/openwrt_release
 
 # 移除要替换的包
+rm -rf package/kernel
+cp -af kernel package
+chmod +x package/kernel
 rm -rf feeds/luci/applications/luci-app-upnp
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-openclash
