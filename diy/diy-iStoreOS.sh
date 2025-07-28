@@ -6,6 +6,13 @@ wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/smartdns > files/etc/config/smartdns
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/360t7/wireless  > files/etc/config/wireless
 
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/kernel/linux/modules/video.mk -P package/kernel/linux/modules/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch -P package/network/utils/nftables/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/network/utils/nftables/patches/001-drop-useless-file.patch -P package/network/utils/nftables/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/libs/libnftnl/patches/001-libnftnl-add-fullcone-expression-support.patch -P package/libs/libnftnl/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/firmware/wireless-regdb/patches/600-custom-change-txpower-and-dfs.patch -P package/firmware/wireless-regdb/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/master/config/Config-kernel.in -P config/
+
 
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
@@ -28,9 +35,6 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-files/files/etc/openwrt_release
 
 # 移除要替换的包
-rm -rf package/kernel
-cp -af kernel package
-chmod +x package/kernel
 rm -rf feeds/luci/applications/luci-app-upnp
 rm -rf feeds/packages/net/mosdns
 rm -rf feeds/luci/applications/luci-app-openclash
