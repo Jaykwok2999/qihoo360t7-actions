@@ -1,0 +1,53 @@
+diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
+index 0f93b1a83abd9a..547fbcc2505177 100644
+--- a/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
++++ b/target/linux/mediatek/filogic/base-files/etc/board.d/02_network
+@@ -202,6 +202,16 @@ mediatek_setup_macs()
+ 		wan_mac=$(macaddr_add "$lan_mac" 1)
+ 		label_mac=$wan_mac
+ 		;;
++        newland,nl-wr8103)
++		lan_mac=$(mtd_get_mac_ascii factory lanMac)
++		wan_mac=$(macaddr_add "$lan_mac" 1)
++		label_mac=$wan_mac
++		;;
++        newland,nl-wr9103)
++		lan_mac=$(mtd_get_mac_ascii factory lanMac)
++		wan_mac=$(macaddr_add "$lan_mac" 1)
++		label_mac=$wan_mac
++		;;
+ 	ruijie,rg-x60-pro)
+ 		label_mac=$(mtd_get_mac_ascii product_info ethaddr)
+ 		wan_mac=$label_mac
+
+diff --git a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
+index f027c306b11a91..f83dfe52aefa12 100644
+--- a/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
++++ b/target/linux/mediatek/filogic/base-files/etc/hotplug.d/ieee80211/11_fix_wifi_mac
+@@ -182,6 +182,8 @@ case "$board" in
+ 		;;
+ 	routerich,ax3000|\
+ 	routerich,ax3000-ubootmod|\
++	newland,nl-wr8103|\
++	newland,nl-wr9103|\
+ 	zbtlink,zbt-z8102ax|\
+ 	zbtlink,zbt-z8103ax|\
+ 	zyxel,ex5601-t0-stock|\
+
+diff --git a/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds b/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
+index 19e815b415a62a..90be0d9ee89b4c 100644
+--- a/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
++++ b/target/linux/mediatek/filogic/base-files/etc/board.d/01_leds
+@@ -78,6 +78,12 @@ glinet,gl-xe3000)
+ huasifei,wh3000)
+ 	ucidef_set_led_netdev "wan" "WAN" "red:wan" "eth1" "link tx rx"
+ 	;;
++newland,nl-wr8103)
++	ucidef_set_led_netdev "wan" "WAN" "red:wan" "eth1" "link tx rx"
++	;;
++newland,nl-wr9103)
++	ucidef_set_led_netdev "wan" "WAN" "red:wan" "eth1" "link tx rx"
++	;;
+ mercusys,mr80x-v3)
+ 	ucidef_set_led_netdev "lan1" "lan-1" "green:lan-1" "lan1" "link tx rx"
+ 	ucidef_set_led_netdev "lan2" "lan-2" "green:lan-2" "lan2" "link tx rx"

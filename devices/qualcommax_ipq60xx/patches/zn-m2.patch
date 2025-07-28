@@ -1,0 +1,112 @@
+--- a/target/linux/qualcommax/image/ipq60xx.mk
++++ b/target/linux/qualcommax/image/ipq60xx.mk
+@@ -10,6 +10,8 @@ define Device/cmiot_ax18
+ 	$(call Device/UbiFit)
+ 	DEVICE_VENDOR := CMIOT
+ 	DEVICE_MODEL := AX18
++	DEVICE_ALT0_VENDOR := ZN
++	DEVICE_ALT0_MODEL := M2
+ 	BLOCKSIZE := 128k
+ 	PAGESIZE := 2048
+ 	DEVICE_DTS_CONFIG := config@cp03-c1
+@@ -127,7 +129,9 @@ define Device/xiaomi_rm1800
+ 	$(call Device/FitImage)
+ 	$(call Device/UbiFit)
+ 	DEVICE_VENDOR := Xiaomi
+-	DEVICE_MODEL := RM1800 (AX5)
++	DEVICE_MODEL := AX1800
++	DEVICE_ALT0_VENDOR := Redmi
++	DEVICE_ALT0_MODEL := AX5
+ 	BLOCKSIZE := 128k
+ 	PAGESIZE := 2048
+ 	SOC := ipq6000
+
+diff --git a/package/firmware/ath11k-firmware/Makefile b/package/firmware/ath11k-firmware/Makefile
+index 2257313b4..40471102e 100644
+--- a/package/firmware/ath11k-firmware/Makefile
++++ b/package/firmware/ath11k-firmware/Makefile
+@@ -8,13 +8,13 @@
+ include $(TOPDIR)/rules.mk
+ 
+ PKG_NAME:=ath11k-firmware
+-PKG_SOURCE_DATE:=2023-03-31
+-PKG_SOURCE_VERSION:=a039049a9349722fa5c74185452ab04644a0d351
+-PKG_MIRROR_HASH:=ed401e3f6e91d70565b3396139193f7e815f410db93700697205ac8ed1b828c5
++PKG_SOURCE_DATE:=2024-10-14
++PKG_SOURCE_VERSION:=15f050122da5ef5bef2cc8c7c19dfb7f98060a49
++PKG_MIRROR_HASH:=skip
+ PKG_RELEASE:=1
+ 
+ PKG_SOURCE_PROTO:=git
+-PKG_SOURCE_URL:=https://github.com/quic/upstream-wifi-fw.git
++PKG_SOURCE_URL:=https://git.codelinaro.org/clo/ath-firmware/ath11k-firmware.git
+ 
+ PKG_LICENSE_FILES:=LICENSE.qca_firmware
+ 
+@@ -62,21 +62,10 @@ define Build/Compile
+ 
+ endef
+ 
+-QCN9074_BOARD_REV:=8e140c65f36137714b6d8934e09dcd73cb05c2f6
+-QCN9074_BOARD_FILE:=board-2.bin.$(QCN9074_BOARD_REV)
+-
+-define Download/qcn9074-board
+-  URL:=https://github.com/kvalo/ath11k-firmware/raw/master/QCN9074/hw1.0/
+-  URL_FILE:=board-2.bin
+-  FILE:=$(QCN9074_BOARD_FILE)
+-  HASH:=dbf0ca14aa1229eccd48f26f1026901b9718b143bd30b51b8ea67c84ba6207f1
+-endef
+-$(eval $(call Download,qcn9074-board))
+-
+ define Package/ath11k-firmware-ipq5018/install
+ 	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/IPQ5018/hw1.0
+ 	$(INSTALL_DATA) \
+-		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/*.* \
++		$(PKG_BUILD_DIR)/IPQ5018_QCN6122_QCN6122/hw1.0/2.7.0.1/WLAN.HK.2.7.0.1-01744-QCAHKSWPL_SILICONZ-1/*.* \
+ 		$(1)/lib/firmware/ath11k/IPQ5018/hw1.0/
+ endef
+ 
+@@ -84,14 +73,16 @@ define Package/ath11k-firmware-ipq6018/install
+ 	$(INSTALL_DIR) $(1)/lib/firmware/IPQ6018
+ 	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/IPQ6018/hw1.0
+ 	$(INSTALL_DATA) \
+-		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ6018/hw1.0/2.5.0.1/WLAN.HK.2.5.0.1-01208-QCAHKSWPL_SILICONZ-1/* \
++		$(PKG_BUILD_DIR)/IPQ6018/hw1.0/2.5.0.1/WLAN.HK.2.5.0.1-03982-QCAHKSWPL_SILICONZ-3/* \
+ 		$(1)/lib/firmware/IPQ6018/
++	$(INSTALL_BIN) \
++		$(PKG_BUILD_DIR)/IPQ6018/hw1.0/board-2.bin $(1)/lib/firmware/ath11k/IPQ6018/hw1.0/
+ endef
+ 
+ define Package/ath11k-firmware-ipq8074/install
+ 	$(INSTALL_DIR) $(1)/lib/firmware/IPQ8074
+ 	$(INSTALL_DATA) \
+-		$(PKG_BUILD_DIR)/ath11k-firmware/IPQ8074/hw2.0/testing/2.9.0.1/WLAN.HK.2.9.0.1-01385-QCAHKSWPL_SILICONZ-1/* \
++		$(PKG_BUILD_DIR)/IPQ8074/hw2.0/2.9.0.1/WLAN.HK.2.9.0.1-02146-QCAHKSWPL_SILICONZ-1/* \
+ 		$(1)/lib/firmware/IPQ8074/
+ endef
+ 
+@@ -105,10 +96,10 @@ endef
+ define Package/ath11k-firmware-qcn9074/install
+ 	$(INSTALL_DIR) $(1)/lib/firmware/ath11k/QCN9074/hw1.0
+ 	$(INSTALL_DATA) \
+-		$(PKG_BUILD_DIR)/ath11k-firmware/QCN9074/hw1.0/testing/2.9.0.1/WLAN.HK.2.9.0.1-01385-QCAHKSWPL_SILICONZ-1/* \
++		$(PKG_BUILD_DIR)/QCN9074/hw1.0/2.9.0.1/WLAN.HK.2.9.0.1-02146-QCAHKSWPL_SILICONZ-1/* \
+ 		$(1)/lib/firmware/ath11k/QCN9074/hw1.0/
+ 	$(INSTALL_BIN) \
+-		$(DL_DIR)/$(QCN9074_BOARD_FILE) $(1)/lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
++		$(PKG_BUILD_DIR)/QCN9074/hw1.0/board-2.bin $(1)/lib/firmware/ath11k/QCN9074/hw1.0/board-2.bin
+ endef
+ 
+ $(eval $(call BuildPackage,ath11k-firmware-ipq5018))
+diff --git a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-ax18.dts b/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-ax18.dts
+index e887ff87a..b539d8dbb 100644
+--- a/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-ax18.dts
++++ b/target/linux/qualcommax/files/arch/arm64/boot/dts/qcom/ipq6000-ax18.dts
+@@ -213,6 +213,6 @@
+ };
+ 
+ &wifi {
+-	status = "disabled";
++	status = "okay";
+ 	qcom,ath11k-fw-memory-mode = <2>;
+ };
