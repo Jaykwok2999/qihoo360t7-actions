@@ -1,0 +1,43 @@
+From 3830efa566dd38c7224b15efa311ffec06364221 Mon Sep 17 00:00:00 2001
+From: jjm2473 <jjm2473@gmail.com>
+Date: Mon, 17 Mar 2025 18:12:46 +0800
+Subject: [PATCH] supports upstream dts
+
+---
+ drivers/rknpu/rknpu_devfreq.c            | 4 ++++
+ drivers/video/rockchip/mpp/mpp_rkvenc2.c | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/drivers/rknpu/rknpu_devfreq.c b/drivers/rknpu/rknpu_devfreq.c
+index a995d2d..c7e819f 100644
+--- a/drivers/rknpu/rknpu_devfreq.c
++++ b/drivers/rknpu/rknpu_devfreq.c
+@@ -266,6 +266,10 @@ static const struct of_device_id rockchip_npu_of_match[] = {
+ 		.compatible = "rockchip,rk3588",
+ 		.data = (void *)&rk3588_npu_opp_data,
+ 	},
++	{
++		.compatible = "rockchip,rk3588s",
++		.data = (void *)&rk3588_npu_opp_data,
++	},
+ 	{},
+ };
+ 
+diff --git a/drivers/video/rockchip/mpp/mpp_rkvenc2.c b/drivers/video/rockchip/mpp/mpp_rkvenc2.c
+index 96fb175..923448c 100644
+--- a/drivers/video/rockchip/mpp/mpp_rkvenc2.c
++++ b/drivers/video/rockchip/mpp/mpp_rkvenc2.c
+@@ -2057,6 +2057,10 @@ static const struct of_device_id rockchip_rkvenc_of_match[] = {
+ 		.compatible = "rockchip,rk3588",
+ 		.data = (void *)&rk3588_venc_opp_data,
+ 	},
++	{
++		.compatible = "rockchip,rk3588s",
++		.data = (void *)&rk3588_venc_opp_data,
++	},
+ 	{},
+ };
+ 
+-- 
+2.46.0
+
