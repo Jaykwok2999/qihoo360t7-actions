@@ -13,6 +13,16 @@ wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/
 wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-24.10/package/firmware/wireless-regdb/patches/600-custom-change-txpower-and-dfs.patch -P package/firmware/wireless-regdb/patches/
 wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/master/config/Config-kernel.in -P config/
 
+rm -rf package/libs/openssl package/network/services/ppp
+git_clone_path openwrt-24.10 https://github.com/immortalwrt/immortalwrt package/libs/openssl package/network/services/ppp
+
+git_clone_path master https://github.com/coolsnowwolf/lede mv target/linux/generic/hack-6.6
+
+rm -rf package/system/fstools
+git_clone_path master https://github.com/coolsnowwolf/lede package/system/fstools
+
+rm -rf target/linux/generic/hack-6.6/767-net-phy-realtek-add-led*
+wget -N https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/pending-6.6/613-netfilter_optional_tcp_window_check.patch -P target/linux/generic/pending-6.6/
 
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
