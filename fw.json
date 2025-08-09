@@ -1,8 +1,8 @@
 {
     "x86_64": [
         {
-            "build_date": "1754672235",
-            "sha256sum": "dcc9b8de81317ce6f7b702c5af9081755a14176011844ed7126db68805771dad",
+            "build_date": "1754758585",
+            "sha256sum": "d1ce433038e15dae75c7d4599c5e54ac9ffd09cb9110e818d5e9784090ea7e92",
             "url": "https://pro.sos07.eu.org/https://github.com/Jaykwok2999/qihoo360t7-actions/releases/download/OpenWrt/openwrt-mediatek-filogic-qihoo_360t7-squashfs-sysupgrade.itb"
         }
     ]
