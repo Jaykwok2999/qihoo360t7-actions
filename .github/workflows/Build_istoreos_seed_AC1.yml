@@ -1,12 +1,10 @@
-name: Build_isos_3rd_seed
+name: Build_isos_seed
 
 on:
   repository_dispatch:
   workflow_dispatch:
-
-# 定时触发编译
 #  schedule:
-#    - cron: 10 19 * * 5
+#    - cron: '10 19 * * 5'
 
 jobs:
   build:
@@ -29,7 +27,7 @@ jobs:
       - name: Free disk space
         uses: xiangfeidexiaohuo/actions@free-disk
         with:
-          build-mount-path: /home/runner/work/AE86Wrt/AE86Wrt
+          build-mount-path: /home/runner/work/EasyWrt/EasyWrt
 
       - name: Initialization environment
         env:
@@ -47,13 +45,13 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: xiangfeidexiaohuo/istoreos-seed-ac
-          token: ${{ secrets.AC_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           path: openwrt-${{ matrix.model }}
 
       - name: Start build
         working-directory: ./openwrt-${{ matrix.model }}
         run: |
-          git clone https://github.com/xiangfeidexiaohuo/AE86Wrt.git
+          git clone https://github.com/xiangfeidexiaohuo/EasyWrt.git
           cp -f ./qihoo360t7-actions/diy/op/isos1.sh ./
           chmod +x ./isos1.sh && ./isos1.sh
 
@@ -69,7 +67,7 @@ jobs:
         uses: actions/checkout@main
         with:
           repository: xiangfeidexiaohuo/istoreos-seed-ac
-          token: ${{ secrets.AC_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           ref: config
           path: AC-${{ matrix.model }}
 
@@ -77,7 +75,6 @@ jobs:
         working-directory: ./openwrt-${{ matrix.model }}
         run: |
           mv ../AC-${{ matrix.model }}/${{ matrix.config_file }} .config
-          cat ./qihoo360t7-actions/configs/ARM/other/isos_add.config >> .config
           make defconfig
 
       - name: Download package
@@ -91,7 +88,7 @@ jobs:
         working-directory: ./openwrt-${{ matrix.model }}
         run: |
           date '+%Y%m%d%H' > version
-          echo -n 6a9e125268c43e0bae8cecb014c8ab03 > .vermagic 
+          echo -n 6a9e125268c43e0bae8cecb014c8ab03 > .vermagic
           make -j$(nproc) V=s
 
       - name: Prepare artifacts
@@ -99,15 +96,8 @@ jobs:
         run: |
           mkdir -p artifacts/${{ matrix.model }}
           
-          getmd5() {
-            md5sum=`md5sum $1`
-            md5=`echo ${md5sum% *}`
-            md5=`echo ${md5:0:10}`
-          }
-          
           rom=openwrt-${{ matrix.model }}/bin/targets/mediatek/filogic/${{ matrix.output_pattern }}
-          getmd5 $rom
-          cp -a $rom artifacts/${{ matrix.model }}/istoreos-3rd-seed-${{ matrix.lower_model }}-$(date +%Y%m%d)_${md5}.bin
+          cp -a $rom artifacts/${{ matrix.model }}/istoreos-24.10.2-$(date '+%Y%m%d%H')-seed-${{ matrix.lower_model }}-squashfs-sysupgrade.bin
 
       - name: Upload Firmware Artifacts
         uses: actions/upload-artifact@main
@@ -120,33 +110,3 @@ jobs:
         with:
           name: ${{ matrix.model }}-packages
           path: openwrt-${{ matrix.model }}/bin/packages/*
-
-  create_release:
-    name: Create Release
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download all artifacts
-        uses: actions/download-artifact@main
-        with:
-          path: downloaded_artifacts
-
-      - name: Prepare release assets
-        run: |
-          mkdir -p release_assets
-          find downloaded_artifacts -name "*.bin" -exec cp {} release_assets \;
-          
-      - name: Generate release info
-        id: release_info
-        run: |
-          echo "release_tag=$(date +%Y%m%d%H%M%S)" >> $GITHUB_OUTPUT
-          echo "release_name=isos-3rd-seed-acx-$(date +%Y%m%d)" >> $GITHUB_OUTPUT
-
-      - name: Create release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ steps.release_info.outputs.release_tag }}
-          name: ${{ steps.release_info.outputs.release_name }}
-          files: |
-            release_assets/*
-          token: ${{ secrets.GITHUB_TOKEN }}
