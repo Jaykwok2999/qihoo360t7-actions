@@ -209,7 +209,7 @@ jobs:
             });
 
             const asset = latest.data.assets.find(a => 
-              a.name === 'istoreos-x86-64-generic-squashfs-combined-efi.img.gz');
+              a.name === 'openwrt-mediatek-filogic-qihoo_360t7-squashfs-sysupgrade.itb');
 
             if (!asset) {
               core.setFailed("Target firmware not found in the latest release.");
@@ -234,7 +234,7 @@ jobs:
             const proxiedUrl = 'https://pro.sos07.eu.org/' + asset.browser_download_url;    
             
             const json = {
-              "x86_64": [
+              "aarch64_cortex-a53": [
                 {
                   "build_date": String(buildDate),
                   "sha256sum": sha256,
