@@ -104,6 +104,9 @@ git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/pas
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
+rm -rf package/feeds/packages/rust
+git_sparse_clone openwrt-24.10 https://github.com/immortalwrt/packages lang/rust
+
 # SSRP & Passwall
 git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-passwall
 cp -af feeds/istoreos_ipk/patch/un.svg package/luci-app-passwall/root/www/luci-static/passwall/flags/
