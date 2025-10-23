@@ -7,7 +7,7 @@ on:
 env:
   REPO_URL: https://github.com/istoreos/istoreos.git
   REPO_BRANCH: istoreos-24.10
-  CONFIG_FILE: configs/360t7.config
+  CONFIG_FILE: configs/qihoo_360t7-OpenWrt.config
   DIY_SCRIPT: diy/diy-OpenWrt.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
