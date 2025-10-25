@@ -1,8 +1,8 @@
 {
     "aarch64_cortex-a53": [
         {
-            "build_date": "1761241075",
-            "sha256sum": "127a69f9bd93ae9544e327c3044bb863921866e20cd0a65869ad208784272825",
+            "build_date": "1761413700",
+            "sha256sum": "113d668f0dcb3d6b85936195fcfcd179146423a9d244f387813c347e83de68ef",
             "url": "https://pro.sos07.eu.org/https://github.com/Jaykwok2999/qihoo360t7-actions/releases/download/OpenWrt/openwrt-mediatek-filogic-qihoo_360t7-squashfs-sysupgrade.itb"
         }
     ]
