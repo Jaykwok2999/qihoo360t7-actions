@@ -130,7 +130,10 @@ cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
 rm -rf feeds/packages/net/tailscale
 sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
 
-
+# 必要的补丁
+pushd feeds/luci
+  curl -sSL https://raw.githubusercontent.com/Jaykwok2999/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+popd
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
