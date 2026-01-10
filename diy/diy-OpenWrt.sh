@@ -41,6 +41,7 @@ rm -rf feeds/istoreos_ipk/vlmcsd
 rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
 rm -rf feeds/istoreos_ipk/linkease
+rm -rf feeds/istoreos_ipk/tailscale
 # 移除 openwrt feeds 自带的核心库
 rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
 git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
@@ -127,8 +128,8 @@ rm -rf package/base-files/files/etc/banner
 cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
 
 # tailscale
-rm -rf feeds/packages/net/tailscale
-sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
+#rm -rf feeds/packages/net/tailscale
+#sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
 
 # 必要的补丁
 pushd feeds/luci
