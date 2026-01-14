@@ -16,9 +16,12 @@ wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main
 # 修改WiFi名称
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/360t7/wireless  > files/etc/config/wireless
 
+# 修改默认IP
+sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
 
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='OpenWrt'/g" ./package/base-files/files/bin/config_generate
+
 #修改默认时区
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
