@@ -47,6 +47,8 @@ rm -rf feeds/third_party/{luci-app-LingTiGameAcc,luci-app-smartdns,smartdns}
 rm -rf feeds/small/{luci-app-openclash,sing-box,luci-app-passwall,shadowsocksr-libev,shadowsocks-rust,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-wol,luci-app-bypass,luci-app-argon-config,luci-theme-argon}
 rm -rf feeds/luci/applications/{luci-app-tailscale,luci-app-turboacc,luci-app-alist,shadowsocksr-libev,shadowsocks-rust,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-wol,luci-app-bypass,luci-app-argon-config,luci-theme-argon}
 rm -rf feeds/luci/packages/net/{shadowsocksr-libev-ssr-check,shadowsocksr-libev-ssr-local,shadowsocksr-libev-ssr-redir,shadowsocksr-libev-ssr-server}
+rm -rf feeds/nas_luci
+
 
 # istoreos-theme
 rm -rf feeds/kenzo/{luci-app-argon-config,luci-theme-argon}
@@ -92,15 +94,15 @@ function merge_package() {
 
 
 git_sparse_clone main https://github.com/Jaykwok2999/luci-app-passwall luci-app-passwall
-
+git_sparse_clone main https://github.com/Jaykwok2999/linkease linkease
 #git_sparse_clone luci https://github.com/chenmozhijin/turboacc luci-app-turboacc
 
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-mosdns
 #git_sparse_clone main https://github.com/kiddin9/kwrt-packages mosdns
-#git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-tailscale
-#git_sparse_clone main https://github.com/kiddin9/kwrt-packages tailscale
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-upnp
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages miniupnpd
+git_sparse_clone main https://github.com/Jaykwok2999/luci-app-tailscale luci-app-tailscale
+git_sparse_clone main https://github.com/Jaykwok2999/luci-app-tailscale tailscale
+#git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-upnp
+#git_sparse_clone main https://github.com/kiddin9/kwrt-packages miniupnpd
 
 git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
