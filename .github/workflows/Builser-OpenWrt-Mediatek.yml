@@ -14,7 +14,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: openwrt-24.10
-  CONFIG_FILE: config/mediatek-openwrt.config
+  CONFIG_FILE: configs/mediatek-openwrt.config
   DIY_SCRIPT: diy/diy-openwrt-mediatek.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
@@ -102,14 +102,12 @@ jobs:
     - name: 安装feeds
       run: |
         cd $OPENWRT_PATH
-        sed -i "1isrc-git nas https://github.com/linkease/nas-packages.git;master\n" feeds.conf.default        
-        sed -i "2isrc-git nas_luci https://github.com/linkease/nas-packages-luci.git;main\n" feeds.conf.default        
-        sed -i "3isrc-git turboacc https://github.com/chenmozhijin/turboacc.git;luci\n" feeds.conf.default        
-        sed -i "4isrc-git turboaccpackage https://github.com/chenmozhijin/turboacc.git;package\n" feeds.conf.default        
-        sed -i "5isrc-git theme https://github.com/sos801107/packages;main\n" feeds.conf.default        
-        sed -i "6isrc-git small https://github.com/kenzok8/small;master\n" feeds.conf.default      
-        sed -i "7isrc-git kenzo https://github.com/kenzok8/openwrt-packages;master\n" feeds.conf.default        
-        #sed -i "8isrc-git appota https://github.com/sos801107/istoreos-ota;op\n" feeds.conf.default          
+        sed -i "1isrc-git linkease https://github.com/Jaykwok2999/linkease.git;main\n" feeds.conf.default        
+        sed -i "2isrc-git turboacc https://github.com/chenmozhijin/turboacc.git;luci\n" feeds.conf.default        
+        sed -i "3isrc-git turboaccpackage https://github.com/chenmozhijin/turboacc.git;package\n" feeds.conf.default        
+        sed -i "4isrc-git theme https://github.com/Jaykwok2999/openwrt-theme;main\n" feeds.conf.default        
+        sed -i "5isrc-git small https://github.com/kenzok8/small;master\n" feeds.conf.default      
+        sed -i "6isrc-git kenzo https://github.com/kenzok8/openwrt-packages;master\n" feeds.conf.default        
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -156,35 +154,7 @@ jobs:
       run: |
         cd $OPENWRT_PATH/bin/targets/*/*
         
-        mv openwrt-mediatek-filogic-abt_asr3000-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-abt_asr3000-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-cetron_ct3003-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-cetron_ct3003-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-cmcc_a10-stock-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-cmcc_a10-stock-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-cmcc_a10-ubootmod-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-cmcc_a10-ubootmod-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-cmcc_rax3000m-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-cmcc_rax3000m-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-cudy_tr3000-v1-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-cudy_tr3000-v1-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-cudy_tr3000-v1-ubootmod-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-cudy_tr3000-v1-ubootmod-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-glinet_gl-mt3000-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-glinet_gl-mt3000-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-glinet_gl-mt6000-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-glinet_gl-mt6000-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-glinet_gl-x3000-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-glinet_gl-x3000-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-glinet_gl-xe3000-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-glinet_gl-xe3000-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-h3c_magic-nx30-pro-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-h3c_magic-nx30-pro-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-jcg_q30-pro-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-jcg_q30-pro-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-jdcloud_re-cp-03-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-jdcloud_re-cp-03-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-netcore_n60-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-netcore_n60-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-nokia_ea0326gmp-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-nokia_ea0326gmp-squashfs-sysupgrade.itb
         mv openwrt-mediatek-filogic-qihoo_360t7-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-qihoo_360t7-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-ruijie_rg-x60-pro-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-ruijie_rg-x60-pro-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-tplink_tl-xdr4288-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-tplink_tl-xdr4288-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-tplink_tl-xdr6086-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-tplink_tl-xdr6086-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-tplink_tl-xdr6088-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-tplink_tl-xdr6088-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-tplink_tl-xtr8488-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-tplink_tl-xtr8488-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-xiaomi_mi-router-ax3000t-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-xiaomi_mi-router-ax3000t-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-xiaomi_mi-router-ax3000t-ubootmod-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-xiaomi_mi-router-ax3000t-ubootmod-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-xiaomi_mi-router-wr30u-stock-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-xiaomi_mi-router-wr30u-stock-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-xiaomi_mi-router-wr30u-ubootmod-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-xiaomi_mi-router-wr30u-ubootmod-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-stock-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-xiaomi_redmi-router-ax6000-stock-squashfs-sysupgrade.bin
-        mv openwrt-mediatek-filogic-xiaomi_redmi-router-ax6000-ubootmod-squashfs-sysupgrade.itb openwrt-24.10.2-$(date +"%Y%m%d%H")-xiaomi_redmi-router-ax6000-ubootmod-squashfs-sysupgrade.itb
-        mv openwrt-mediatek-filogic-zyxel_ex5700-telenor-squashfs-sysupgrade.bin openwrt-24.10.2-$(date +"%Y%m%d%H")-zyxel_ex5700-telenor-squashfs-sysupgrade.bin
         cat sha256sums
         cp $OPENWRT_PATH/.config build.config
         mv -f $OPENWRT_PATH/bin/packages/*/*/*.ipk packages
@@ -215,6 +185,6 @@ jobs:
           📂 固件源码: ${{ env.REPO_URL }}
           🌳 源码分支: ${{ env.REPO_BRANCH }}
           🚀 内核版本: ${{ env.KERNEL }}
-          🌐 默认地址: 192.168.1.1
+          🌐 默认地址: 192.168.5.1
           👤 用户名: root
           🔒 默认密码: 空
