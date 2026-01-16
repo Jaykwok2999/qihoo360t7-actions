@@ -41,22 +41,35 @@ sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-n
 sed -i "s/DISTRIB_REVISION='*.*'/DISTRIB_REVISION=' By JayKwok'/g" package/base-files/files/etc/openwrt_release
 
 # 移除要替换的包
-rm -rf feeds/packages/net/{xray-core,v2ray-core,v2ray-geodata,sing-box,adguardhome,mosdns,v2ray-geodata,v2ray-geoip,chinadns-ng,dns2socks,dns2tcp,microsocks,alist}
+rm -rf feeds/luci/applications/luci-app-upnp
+rm -rf feeds/packages/net/mosdns
+rm -rf feeds/luci/applications/luci-app-openclash
+rm -rf feeds/luci/applications/luci-app-passwall
 rm -rf feeds/packages/utils/v2dat
-rm -rf feeds/third_party/{luci-app-LingTiGameAcc,luci-app-smartdns,smartdns}
-rm -rf feeds/small/{luci-app-openclash,sing-box,luci-app-passwall,shadowsocksr-libev,shadowsocks-rust,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-wol,luci-app-bypass,luci-app-argon-config,luci-theme-argon}
-rm -rf feeds/luci/applications/{luci-app-tailscale,luci-app-turboacc,luci-app-alist,shadowsocksr-libev,shadowsocks-rust,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-ssr-plus,luci-i18n-ssr-plus-zh-cn,luci-app-wol,luci-app-bypass,luci-app-argon-config,luci-theme-argon}
-rm -rf feeds/luci/packages/net/{shadowsocksr-libev-ssr-check,shadowsocksr-libev-ssr-local,shadowsocksr-libev-ssr-redir,shadowsocksr-libev-ssr-server}
-rm -rf feeds/nas_luci
-
+rm -rf feeds/istoreos_ipk/op-daed
+rm -rf feeds/istoreos_ipk/patch/istoreos-files
+rm -rf feeds/istoreos_ipk/vlmcsd
+rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
+rm -rf package/diy/luci-app-ota
+rm -rf feeds/istoreos_ipk/linkease
+rm -rf feeds/istoreos_ipk/tailscale
+# 移除 openwrt feeds 自带的核心库
+rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
+git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
 
 # istoreos-theme
-rm -rf feeds/kenzo/{luci-app-argon-config,luci-theme-argon}
-rm -rf feeds/third/{luci-app-argon-config,luci-theme-argon}
 rm -rf feeds/luci/themes/luci-theme-argon
 rm -rf feeds/luci/applications/luci-app-argon-config
-rm -rf feeds/turboaccpackage/nft-fullcone
-rm -rf package/turboacc/nft-fullcone
+rm -rf feeds/luci/modules/luci-base/po/zh_Hans/base.po
+cp -af feeds/istoreos_ipk/patch/zh_Hans/base.po feeds/luci/modules/luci-base/po/zh_Hans/
+echo -e "\nmsgid \"Control\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
+echo -e "msgstr \"控制\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
+
+echo -e "\nmsgid \"NAS\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
+echo -e "msgstr \"网络存储\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
+
+echo -e "\nmsgid \"VPN\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
+echo -e "msgstr \"魔法网络\"" >> feeds/luci/modules/luci-base/po/zh_Hans/base.po
 
 # Git稀疏克隆，只克隆指定目录到本地
 function git_sparse_clone() {
@@ -93,38 +106,46 @@ function merge_package() {
 }
 
 
-git_sparse_clone main https://github.com/Jaykwok2999/luci-app-passwall luci-app-passwall
-git_sparse_clone main https://github.com/Jaykwok2999/linkease linkease
-#git_sparse_clone luci https://github.com/chenmozhijin/turboacc luci-app-turboacc
-
-#git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-mosdns
-#git_sparse_clone main https://github.com/kiddin9/kwrt-packages mosdns
-git_sparse_clone main https://github.com/Jaykwok2999/luci-app-tailscale luci-app-tailscale
-git_sparse_clone main https://github.com/Jaykwok2999/luci-app-tailscale tailscale
-#git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-upnp
-#git_sparse_clone main https://github.com/kiddin9/kwrt-packages miniupnpd
-
+rm -rf feeds/istoreos_ipk/luci-app-openclash
 git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
-#git_sparse_clone main https://github.com/sos801107/packages sing-box
 
-# golong1.26.x依赖
+git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwallpackages
+
+# 更新 golang 26.x 版本
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
 
 rm -rf package/feeds/packages/rust
 git_sparse_clone openwrt-24.10 https://github.com/immortalwrt/packages lang/rust
 
+# SSRP & Passwall
+git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-passwall
+cp -af feeds/istoreos_ipk/patch/un.svg package/luci-app-passwall/root/www/luci-static/passwall/flags/
+
+# NTP
+sed -i 's/0.openwrt.pool.ntp.org/ntp1.aliyun.com/g' package/base-files/files/bin/config_generate
+sed -i 's/1.openwrt.pool.ntp.org/ntp2.aliyun.com/g' package/base-files/files/bin/config_generate
+sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/files/bin/config_generate
+sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
+
 # 更改时间戳
 rm -rf scripts/get_source_date_epoch.sh
 cp -af feeds/istoreos_ipk/patch/get_source_date_epoch.sh scripts/
 chmod +x scripts/get_source_date_epoch.sh
 
+# 更改 banner
+rm -rf package/base-files/files/etc/banner
+cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
+
+# tailscale
+#rm -rf feeds/packages/net/tailscale
+#sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
+
 # 必要的补丁
 pushd feeds/luci
-   curl -s https://raw.githubusercontent.com/oppen321/path/refs/heads/main/Firewall/0001-luci-mod-status-firewall-disable-legacy-firewall-rul.patch | patch -p1
+  curl -sSL https://raw.githubusercontent.com/Jaykwok2999/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
 popd
-
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
