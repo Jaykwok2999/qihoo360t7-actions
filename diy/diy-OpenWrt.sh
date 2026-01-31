@@ -99,7 +99,7 @@ rm -rf feeds/istoreos_ipk/luci-app-openclash
 git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
 
-git clone https://github.com/xiaorouji/openwrt-passwall-packages.git package/passwallpackages
+git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/passwallpackages
 
 # 更新 golang 26.x 版本
 rm -rf feeds/packages/lang/golang
