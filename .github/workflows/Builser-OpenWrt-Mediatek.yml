@@ -12,8 +12,8 @@ on:
 
 
 env:
-  REPO_URL: https://github.com/openwrt/openwrt.git
-  REPO_BRANCH: openwrt-25.12
+  REPO_URL: https://github.com/coolsnowwolf/lede.git
+  REPO_BRANCH: master
   CONFIG_FILE: configs/mediatek-openwrt.config
   DIY_SCRIPT: diy/diy-OpenWrt.sh
   CLASH_KERNEL: amd64
