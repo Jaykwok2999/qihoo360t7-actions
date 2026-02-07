@@ -53,6 +53,7 @@ rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
 rm -rf feeds/istoreos_ipk/linkease
 rm -rf feeds/istoreos_ipk/tailscale
+rm -rf feeds/small/luci-app-passwall
 # 移除 openwrt feeds 自带的核心库
 rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
 
@@ -109,7 +110,7 @@ rm -rf feeds/istoreos_ipk/luci-app-openclash
 git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
 
-git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/passwallpackages
+# git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/passwallpackages
 
 # 更新 golang 26.x 版本
 rm -rf feeds/packages/lang/golang
