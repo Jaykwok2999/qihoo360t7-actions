@@ -139,7 +139,7 @@ rm -rf package/base-files/files/etc/banner
 cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
 
 
-PKG_PATH="$GITHUB_WORKSPACE/openwrt/package/"
+# PKG_PATH="$GITHUB_WORKSPACE/openwrt/package/"
 
 #修复TailScale配置文件冲突
 TS_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/tailscale/Makefile")
