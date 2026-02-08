@@ -1,15 +1,8 @@
-name: Builser-OpenWrt-Mediatek
+name: Builser-OpenWrt-Mediatek-qihoo_360t7
 
-#CI计划
 on:
-  #自动编译：当Auto-Clean运行完成后
-  workflow_run:
-    workflows: ["Auto-Clean"]
-    types:
-      - completed
-  #手动编译
+  repository_dispatch:
   workflow_dispatch:
-
 
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
@@ -102,7 +95,7 @@ jobs:
         sed -i "3isrc-git turboacc https://github.com/chenmozhijin/turboacc.git;luci\n" feeds.conf.default        
         sed -i "4isrc-git turboaccpackage https://github.com/chenmozhijin/turboacc.git;package\n" feeds.conf.default        
         sed -i "5isrc-git theme https://github.com/Jaykwok2999/openwrt-theme.git;main\n" feeds.conf.default        
-        sed -i "6isrc-git small https://github.com/kenzok8/small;master\n" feeds.conf.default      
+        sed -i "6isrc-git small https://github.com/kenzok8/small;master\n" feeds.conf.default        
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
@@ -110,7 +103,7 @@ jobs:
       run: |
         [ -e files ] && mv files $OPENWRT_PATH/files
         [ -e $CONFIG_FILE ] && mv $CONFIG_FILE $OPENWRT_PATH/.config
-        ###chmod +x $GITHUB_WORKSPACE/scripts/*.sh
+        #chmod +x $GITHUB_WORKSPACE/scripts/*.sh
         chmod +x $DIY_SCRIPT
         cd $OPENWRT_PATH
         $GITHUB_WORKSPACE/$DIY_SCRIPT
@@ -148,23 +141,19 @@ jobs:
       if: steps.compile.outputs.status == 'success'
       run: |
         cd $OPENWRT_PATH/bin/targets/*/*
-        
-        #mv openwrt-x86-64-generic-squashfs-combined-efi.img.gz openwrt-24.10.2-$(date +"%Y%m%d%H")-x86-64-squashfs-combined-efi.img.gz
-        #mv openwrt-x86-64-generic-squashfs-combined.img.gz openwrt-24.10.2-$(date +"%Y%m%d%H")-x86-64-squashfs-combined.img.gz
-
         cat sha256sums
         cp $OPENWRT_PATH/.config build.config
         mv -f $OPENWRT_PATH/bin/packages/*/*/*.ipk packages
         tar -zcf Packages.tar.gz packages
-        rm -rf openwrt-mediatek-filogic-qihoo_360t7-squashfs-sysupgrade.itb feeds.buildinfo version.buildinfo
         echo "KERNEL=$(cat *.manifest | grep ^kernel | cut -d- -f2 | tr -d ' ')" >> $GITHUB_ENV
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
+        rm -rf feeds.buildinfo build.config config.buildinfo openwrt-mediatek-filogic-qihoo_360t7-bl31-uboot.fip openwrt-mediatek-filogic.manifest openwrt-mediatek-filogic-qihoo_360t7-preloader.bin openwrt-mediatek-filogic-qihoo_360t7-initramfs-recovery.itb mt7988-ram-ddr3-bl2.bin mt7988-ram-ddr4-bl2.bin mt7981-ram-ddr3-bl2.bin mt7981-ram-ddr4-bl2.bin mt7986-ram-ddr3-bl2.bin mt7986-ram-ddr4-bl2.bin mt7988-ram-comb-bl2.bin
 
     - name: 将固件上传到 Artifact
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE != 'true'
       uses: actions/upload-artifact@main
       with:
-        name: ${{ env.SOURCE_REPO }}-firmware-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}-${{ env.FIRMWARE_TAG }}
+        name: ${{ env.SOURCE_REPO }}-firmware-${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}-${{ env.FIRMWARE_VERSION }}-${{ env.FILE_DATE }}
         path: ${{ env.FIRMWARE_PATH }}
 
     - name: 上传固件以发布Release
@@ -175,7 +164,7 @@ jobs:
         allowUpdates: true
         tag: OpenWrt-Mediatek
         token: ${{ secrets.GITHUB_TOKEN }}
-        artifacts: ${{ env.FIRMWARE_PATH }}/*-squashfs-sysupgrade.*
+        artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
           ### 📒 固件信息
           💻 平台架构: ${{ env.DEVICE_TARGET }}-${{ env.DEVICE_SUBTARGET }}
@@ -185,3 +174,5 @@ jobs:
           🌐 默认地址: 192.168.5.1
           👤 用户名: root
           🔒 默认密码: password
+          🛜 WiFi名称：OpenWrt_2.4G  OpenWrt_5G
+          🛜 WiFi密码：无
