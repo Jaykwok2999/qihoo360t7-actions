@@ -1,7 +1,7 @@
 name: OpenWrt-Update-Checker
 
 env:
-  REPO_URL: https://github.com/immortalwrt/immortalwrt.git
+  REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: openwrt-24.10
 
 on:
