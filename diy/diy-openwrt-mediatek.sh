@@ -132,7 +132,8 @@ sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/f
 
 # 更改时间戳
 rm -rf scripts/get_source_date_epoch.sh
-cp -af feeds/istoreos_ipk/patch/get_source_date_epoch.sh scripts/
+mkdir -p scripts
+wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-actions/refs/heads/main/patch/get_source_date_epoch.sh > scripts/get_source_date_epoch.sh
 chmod +x scripts/get_source_date_epoch.sh
 
 # 更改 banner
