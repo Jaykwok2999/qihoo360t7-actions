@@ -136,7 +136,7 @@ chmod +x scripts/get_source_date_epoch.sh
 
 # 更改 banner
 rm -rf package/base-files/files/etc/banner
-cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
+cp -af feeds/istoreos_ipk/patch/OpenWrt/SNAPSHOT/banner package/base-files/files/etc/
 
 
 # PKG_PATH="$GITHUB_WORKSPACE/openwrt/package/"
