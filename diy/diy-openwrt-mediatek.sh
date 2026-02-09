@@ -52,12 +52,12 @@ rm -rf feeds/istoreos_ipk/vlmcsd
 rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
 rm -rf feeds/istoreos_ipk/linkease
-#rm -rf feeds/istoreos_ipk/tailscale
+rm -rf feeds/istoreos_ipk/tailscale
 rm -rf feeds/small/luci-app-passwall
 # 移除 openwrt feeds 自带的核心库
 rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
 # rm -rf feeds/luci/applications/luci-app-frpc
-rm -rf feeds/packages/net/tailscale
+# rm -rf feeds/packages/net/tailscale
 
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
@@ -142,7 +142,7 @@ rm -rf package/base-files/files/etc/banner
 # cp -af feeds/istoreos_ipk/patch/OpenWrt/SNAPSHOT/banner package/base-files/files/etc/
 cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
 
-# PKG_PATH="$GITHUB_WORKSPACE/openwrt/package/"
+PKG_PATH="$GITHUB_WORKSPACE/openwrt/package/"
 
 #修复TailScale配置文件冲突
 TS_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/tailscale/Makefile")
