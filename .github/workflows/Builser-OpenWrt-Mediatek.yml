@@ -147,7 +147,7 @@ jobs:
         tar -zcf Packages.tar.gz packages
         echo "KERNEL=$(cat *.manifest | grep ^kernel | cut -d- -f2 | tr -d ' ')" >> $GITHUB_ENV
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
-        rm -rf version.buildinfo mt7981-ram-ddr3-bl2.bin mt7981-ram-ddr4-bl2.bin mt7986-ram-ddr3-bl2.bin mt7986-ram-ddr4-bl2.bin mt7988-ram-comb-bl2.bin feeds.buildinfo build.config config.buildinfo openwrt-mediatek-filogic-qihoo_360t7-bl31-uboot.fip openwrt-mediatek-filogic.manifest openwrt-mediatek-filogic-qihoo_360t7-preloader.bin openwrt-mediatek-filogic-qihoo_360t7-initramfs-recovery.itb mt7988-ram-ddr3-bl2.bin mt7988-ram-ddr4-bl2.bin mt7981-ram-ddr3-bl2.bin mt7981-ram-ddr4-bl2.bin mt7986-ram-ddr3-bl2.bin mt7986-ram-ddr4-bl2.bin mt7988-ram-comb-bl2.bin
+        rm -rf version.buildinfo feeds.buildinfo build.config config.buildinfo openwrt-mediatek-filogic-qihoo_360t7-bl31-uboot.fip openwrt-mediatek-filogic.manifest openwrt-mediatek-filogic-qihoo_360t7-preloader.bin openwrt-mediatek-filogic-qihoo_360t7-initramfs-recovery.itb mt7988-ram-ddr3-bl2.bin mt7988-ram-ddr4-bl2.bin mt7981-ram-ddr3-bl2.bin mt7981-ram-ddr4-bl2.bin mt7986-ram-ddr3-bl2.bin mt7986-ram-ddr4-bl2.bin mt7988-ram-comb-bl2.bin
 
     - name: 将固件上传到 Artifact
       if: steps.compile.outputs.status == 'success' && env.FIRMWARE_RELEASE != 'true'
