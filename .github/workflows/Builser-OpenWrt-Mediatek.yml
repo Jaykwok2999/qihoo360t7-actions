@@ -95,7 +95,7 @@ jobs:
         sed -i "3isrc-git turboacc https://github.com/chenmozhijin/turboacc.git;luci\n" feeds.conf.default        
         sed -i "4isrc-git turboaccpackage https://github.com/chenmozhijin/turboacc.git;package\n" feeds.conf.default        
         sed -i "5isrc-git theme https://github.com/Jaykwok2999/openwrt-theme.git;main\n" feeds.conf.default        
-        sed -i "6isrc-git small https://github.com/kenzok8/small;master\n" feeds.conf.default        
+        sed -i "6isrc-git small https://github.com/kenzok8/small.git;master\n" feeds.conf.default        
         ./scripts/feeds update -a
         ./scripts/feeds install -a
 
