@@ -162,7 +162,6 @@ jobs:
       with:
         name: OpenWrt-24.10.2-Mediatek for ${{ env.DATE }}
         allowUpdates: true
-        tag: OpenWrt-Mediatek
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
