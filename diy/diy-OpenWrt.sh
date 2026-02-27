@@ -1,25 +1,38 @@
 #!/bin/bash
 mkdir -p files/etc/config
-# wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/openclash > files/etc/config/openclash
-# wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/proxy/openclash > files/etc/config/openclash
-wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/mosdns > files/etc/config/mosdns
-# wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/smartdns > files/etc/config/smartdns
+#wget -qO- https://raw.githubusercontent.com/liandu2024/clash/refs/heads/main/main_router/openclash > files/etc/config/openclash
+#wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/mosdns > files/etc/config/mosdns
+wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/smartdns > files/etc/config/smartdns
+
+mkdir -p files/etc
+wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/opkg.conf > files/etc/opkg.conf
+mkdir -p files/etc/opkg
+wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/distfeeds.conf > files/etc/opkg/distfeeds.conf
+
+mkdir -p files/root
+wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/.profile > files/root/.profile
+pushd
+   curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+popd
 
 # 修改WiFi名称
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/360t7/wireless  > files/etc/config/wireless
 
-
 # 修改默认IP
 sed -i 's/192.168.1.1/192.168.5.1/g' package/base-files/files/bin/config_generate
-sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
-rm -rf include/version.mk
-cp -af feeds/istoreos_ipk/patch/version.mk include/
+
+#修改默认主机名
+sed -i "s/hostname='.*'/hostname='OpenWrt'/g" ./package/base-files/files/bin/config_generate
+
+#修改默认时区
+sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
+sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
 
 # 修改默认密码
 sed -i 's/root:::0:99999:7:::/root:$1$5mjCdAB1$Uk1sNbwoqfHxUmzRIeuZK1:0:0:99999:7:::/g' package/base-files/files/etc/shadow
 
-# default-settings
-git clone --depth=1 -b main https://github.com/zijieKwok/default-settings.git package/default-settings
+# TTYD
+sed -i 's/services/system/g' feeds/luci/applications/luci-app-ttyd/root/usr/share/luci/menu.d/luci-app-ttyd.json
 
 ##取消bootstrap为默认主题
 sed -i '/set luci.main.mediaurlbase=\/luci-static\/bootstrap/d' feeds/luci/themes/luci-theme-bootstrap/root/etc/uci-defaults/30_luci-theme-bootstrap
@@ -42,10 +55,11 @@ rm -rf feeds/istoreos_ipk/patch/wall-luci/luci-app-vlmcsd
 rm -rf package/diy/luci-app-ota
 rm -rf feeds/istoreos_ipk/linkease
 rm -rf feeds/istoreos_ipk/tailscale
+rm -rf feeds/small/luci-app-passwall
 # 移除 openwrt feeds 自带的核心库
-rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls,frpc}
-rm -rf feeds/luci/applications/luci-app-frpc
-git clone https://github.com/xiaorouji/openwrt-passwall-packages package/passwall-packages
+rm -rf feeds/packages/net/{xray-core,v2ray-geodata,sing-box,chinadns-ng,dns2socks,hysteria,ipt2socks,microsocks,naiveproxy,shadowsocks-libev,shadowsocks-rust,shadowsocksr-libev,simple-obfs,tcping,trojan-plus,tuic-client,v2ray-plugin,xray-plugin,geoview,shadow-tls}
+# rm -rf feeds/luci/applications/luci-app-frpc
+# rm -rf feeds/packages/net/tailscale
 
 # istoreos-theme
 rm -rf feeds/luci/themes/luci-theme-argon
@@ -120,23 +134,92 @@ sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/f
 sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
 
 # 更改时间戳
-rm -rf scripts/get_source_date_epoch.sh
-mkdir -p scripts
-wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-actions/refs/heads/main/patch/get_source_date_epoch.sh > scripts/get_source_date_epoch.sh
-chmod +x scripts/get_source_date_epoch.sh
+#rm -rf scripts/get_source_date_epoch.sh
+#mkdir -p scripts
+#wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-actions/refs/heads/main/patch/get_source_date_epoch.sh > scripts/get_source_date_epoch.sh
+#chmod +x scripts/get_source_date_epoch.sh
+
+sed -i "s#false; \\\#true; \\\#" include/download.mk
+
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-25.12/package/kernel/linux/modules/video.mk -P package/kernel/linux/modules/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-25.12/package/network/utils/nftables/patches/002-nftables-add-fullcone-expression-support.patch -P package/network/utils/nftables/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-25.12/package/libs/libnftnl/patches/001-libnftnl-add-fullcone-expression-support.patch -P package/libs/libnftnl/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-25.12/package/firmware/wireless-regdb/patches/600-custom-change-txpower-and-dfs.patch -P package/firmware/wireless-regdb/patches/
+wget -N  https://github.com/coolsnowwolf/lede/raw/refs/heads/master/package/system/fstools/patches/0200-ntfs3-with-utf8.patch -P package/system/fstools/patches/
+wget -N https://github.com/immortalwrt/immortalwrt/raw/refs/heads/openwrt-25.12/config/Config-kernel.in -P config/
+
+rm -rf package/libs/openssl package/network/services/ppp
+git_clone_path openwrt-25.12 https://github.com/immortalwrt/immortalwrt package/libs/openssl package/network/services/ppp 
+
+echo "$(date +"%s")" >version.date
+sed -i '/$(curdir)\/compile:/c\$(curdir)/compile: package/opkg/host/compile' package/Makefile
+sed -i "s/DEFAULT_PACKAGES:=/DEFAULT_PACKAGES:=luci-app-advancedplus luci-app-firewall luci-app-package-manager luci-app-upnp luci-app-syscontrol luci-proto-wireguard \
+luci-app-wizard luci-base luci-compat luci-lib-ipkg luci-lib-fs \
+coremark wget-ssl curl autocore htop nano zram-swap kmod-lib-zstd kmod-tcp-bbr bash openssh-sftp-server block-mount resolveip ds-lite swconfig luci-app-fan luci-app-filemanager luci-app-wifihistory /" include/target.mk
+
+sed -i "s/procd-ujail//" include/target.mk
+
+sed -i "s/^.*vermagic$/\techo '1' > \$(LINUX_DIR)\/.vermagic/" include/kernel-defaults.mk
+
+wget -N https://raw.githubusercontent.com/openwrt/packages/master/lang/golang/golang/Makefile -P feeds/packages/lang/golang/golang/
+
+#sed -i "/call Build\/check-size,\$\$(KERNEL_SIZE)/d" include/image.mk
+
+sed -i "/+= targz/d" include/image.mk
+
+git_clone_path master https://github.com/coolsnowwolf/lede mv target/linux/generic/hack-6.12
+
+rm -rf target/linux/generic/hack-6.12/767-net-phy-realtek-add-led*
+wget -N https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/pending-6.12/613-netfilter_optional_tcp_window_check.patch -P target/linux/generic/pending-6.12/
+
+# find target/linux/x86 -name "config*" -exec bash -c 'cat kernel.conf >> "{}"' \;
+sed -i 's/max_requests 3/max_requests 20/g' package/network/services/uhttpd/files/uhttpd.config
+#rm -rf ./feeds/packages/lang/{golang,node}
+sed -i "s/tty\(0\|1\)::askfirst/tty\1::respawn/g" target/linux/*/base-files/etc/inittab
+
+date=`date +%m.%d.%Y`
+sed -i -e "/\(# \)\?REVISION:=/c\REVISION:=$date" -e '/VERSION_CODE:=/c\VERSION_CODE:=$(REVISION)' include/version.mk
+
+sed -i 's/option timeout 30/option timeout 60/g' package/system/rpcd/files/rpcd.config
+sed -i 's#20) \* 1000#60) \* 1000#g' feeds/luci/modules/luci-base/htdocs/luci-static/resources/rpc.js
 
 # 更改 banner
 rm -rf package/base-files/files/etc/banner
+# cp -af feeds/istoreos_ipk/patch/OpenWrt/SNAPSHOT/banner package/base-files/files/etc/
 cp -af feeds/istoreos_ipk/patch/banner package/base-files/files/etc/
 
-# tailscale
-#rm -rf feeds/packages/net/tailscale
-#sed -i '/\/etc\/init\.d\/tailscale/d;/\/etc\/config\/tailscale/d;' feeds/packages/net/tailscale/Makefile
+PKG_PATH="$GITHUB_WORKSPACE/openwrt/package/"
 
-# 必要的补丁
-pushd feeds/luci
-  curl -sSL https://raw.githubusercontent.com/Jaykwok2999/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
-popd
+#修复TailScale配置文件冲突
+TS_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/tailscale/Makefile")
+if [ -f "$TS_FILE" ]; then
+	echo " "
+
+	sed -i '/\/files/d' $TS_FILE
+
+	cd $PKG_PATH && echo "tailscale has been fixed!"
+fi
+
+#修复Rust编译失败
+RUST_FILE=$(find ../feeds/packages/ -maxdepth 3 -type f -wholename "*/rust/Makefile")
+if [ -f "$RUST_FILE" ]; then
+	echo " "
+
+	sed -i 's/ci-llvm=true/ci-llvm=false/g' $RUST_FILE
+
+	cd $PKG_PATH && echo "rust has been fixed!"
+fi
+
+#修复DiskMan编译失败
+DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
+if [ -f "$DM_FILE" ]; then
+	echo " "
+
+	sed -i '/ntfs-3g-utils /d' $DM_FILE
+
+	cd $PKG_PATH && echo "diskman has been fixed!"
+fi
+
 
 ./scripts/feeds update -a
 ./scripts/feeds install -a
