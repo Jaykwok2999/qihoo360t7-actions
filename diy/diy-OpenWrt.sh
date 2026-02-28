@@ -154,12 +154,6 @@ sed -i "s/^.*vermagic$/\techo '1' > \$(LINUX_DIR)\/.vermagic/" include/kernel-de
 
 sed -i "/+= targz/d" include/image.mk
 
-git_clone_path master https://github.com/coolsnowwolf/lede mv target/linux/generic/hack-6.12
-
-rm -rf target/linux/generic/hack-6.12/767-net-phy-realtek-add-led*
-wget -N https://raw.githubusercontent.com/coolsnowwolf/lede/master/target/linux/generic/pending-6.12/613-netfilter_optional_tcp_window_check.patch -P target/linux/generic/pending-6.12/
-
-
 date=`date +%m.%d.%Y`
 sed -i -e "/\(# \)\?REVISION:=/c\REVISION:=$date" -e '/VERSION_CODE:=/c\VERSION_CODE:=$(REVISION)' include/version.mk
 
