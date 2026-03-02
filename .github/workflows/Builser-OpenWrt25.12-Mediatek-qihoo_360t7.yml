@@ -7,7 +7,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: openwrt-25.12
-  CONFIG_FILE: configs/360t7.config
+  CONFIG_FILE: configs/2410-6.6-360t7-passwall-sing-box.config
   DIY_SCRIPT: diy/diy-OpenWrt.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
