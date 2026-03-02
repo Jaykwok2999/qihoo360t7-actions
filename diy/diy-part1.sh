@@ -17,3 +17,6 @@
 # echo 'src-git helloworld https://github.com/fw876/helloworld' >>feeds.conf.default
 # echo 'src-git passwall https://github.com/xiaorouji/openwrt-passwall' >>feeds.conf.default
 # echo 'src-git passwall_packages https://github.com/xiaorouji/openwrt-passwall-packages' >>feeds.conf.default
+echo 'src-git istoreos_ipk https://github.com/Jaykwok2999/istoreos-ipk' >>feeds.conf.default    
+echo 'src-git nas_luci https://github.com/Jaykwok2999/linkease' >>feeds.conf.default   
+echo 'src-git turboacc https://github.com/chenmozhijin/turboacc' >>feeds.conf.default
