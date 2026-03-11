@@ -124,7 +124,7 @@ rm -rf package/feeds/packages/rust
 git_sparse_clone openwrt-24.10 https://github.com/immortalwrt/packages lang/rust
 
 # SSRP & Passwall
-git_sparse_clone main https://github.com/kiddin9/kwrt-packages luci-app-passwall
+git_sparse_clone main https://github.com/kiddin9/op-packages luci-app-passwall
 cp -af feeds/istoreos_ipk/patch/un.svg package/luci-app-passwall/root/www/luci-static/passwall/flags/
 
 # NTP
