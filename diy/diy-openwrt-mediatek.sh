@@ -116,12 +116,12 @@ git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
 git clone https://github.com/Openwrt-Passwall/openwrt-passwall-packages.git package/passwallpackages
 
-# 更新 golang 26.x 版本
+## golang
 rm -rf feeds/packages/lang/golang
 git clone https://github.com/sbwml/packages_lang_golang -b 26.x feeds/packages/lang/golang
 
-rm -rf package/feeds/packages/rust
-git_sparse_clone openwrt-24.10 https://github.com/immortalwrt/packages lang/rust
+## rust
+rm -rf feeds/packages/lang/rust && git clone https://github.com/xiangfeidexiaohuo/extra-others && mv extra-others/rust feeds/packages/lang/ && rm -rf extra-others
 
 # SSRP & Passwall
 git_sparse_clone main https://github.com/kiddin9/op-packages luci-app-passwall
