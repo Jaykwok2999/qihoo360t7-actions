@@ -4,16 +4,16 @@ mkdir -p files/etc/config
 #wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/mosdns > files/etc/config/mosdns
 wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/smartdns > files/etc/config/smartdns
 
-mkdir -p files/etc
-wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/opkg.conf > files/etc/opkg.conf
-mkdir -p files/etc/opkg
-wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/distfeeds.conf > files/etc/opkg/distfeeds.conf
+#mkdir -p files/etc
+#wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/opkg.conf > files/etc/opkg.conf
+#mkdir -p files/etc/opkg
+#wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/distfeeds.conf > files/etc/opkg/distfeeds.conf
 
-mkdir -p files/root
-wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/.profile > files/root/.profile
-pushd
-   curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
-popd
+#mkdir -p files/root
+#wget -qO- https://raw.githubusercontent.com/sos801107/TL-XDR608X/refs/heads/main/etc/.profile > files/root/.profile
+#pushd
+#   curl -sSL https://raw.githubusercontent.com/chenmozhijin/turboacc/luci/add_turboacc.sh -o add_turboacc.sh && bash add_turboacc.sh
+#popd
 
 # 修改WiFi名称
 wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-ipk/refs/heads/main/patch/diy/360t7/wireless  > files/etc/config/wireless
@@ -27,6 +27,12 @@ sed -i "s/hostname='.*'/hostname='OpenWrt'/g" ./package/base-files/files/bin/con
 #修改默认时区
 sed -i "s/timezone='.*'/timezone='CST-8'/g" ./package/base-files/files/bin/config_generate
 sed -i "/timezone='.*'/a\\\t\t\set system.@system[-1].zonename='Asia/Shanghai'" ./package/base-files/files/bin/config_generate
+
+##
+sed -i "s/DISTRIB_ID='*.*'/DISTRIB_ID='OpenWrt'/g" package/base-files/files/etc/openwrt_release
+date '+%Y%m%d%H' > package/base-files/files/etc/openwrt_version
+sed -i "s/NAME=\"*.*\"/NAME=\"OpenWrt\"/g" package/base-files/files/usr/lib/os-release
+sed -i "s/BUILD_ID=\"*.*\"/BUILD_ID=\"$(date +%Y%m%d%H) By JayKwok\"/g" package/base-files/files/usr/lib/os-release
 
 # 修改默认密码
 sed -i 's/root:::0:99999:7:::/root:$1$5mjCdAB1$Uk1sNbwoqfHxUmzRIeuZK1:0:0:99999:7:::/g' package/base-files/files/etc/shadow
@@ -134,10 +140,10 @@ sed -i 's/2.openwrt.pool.ntp.org/time1.cloud.tencent.com/g' package/base-files/f
 sed -i 's/3.openwrt.pool.ntp.org/time2.cloud.tencent.com/g' package/base-files/files/bin/config_generate
 
 # 更改时间戳
-rm -rf scripts/get_source_date_epoch.sh
-mkdir -p scripts
-wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-actions/refs/heads/main/patch/get_source_date_epoch.sh > scripts/get_source_date_epoch.sh
-chmod +x scripts/get_source_date_epoch.sh
+#rm -rf scripts/get_source_date_epoch.sh
+#mkdir -p scripts
+#wget -qO- https://raw.githubusercontent.com/Jaykwok2999/istoreos-actions/refs/heads/main/patch/get_source_date_epoch.sh > scripts/get_source_date_epoch.sh
+#chmod +x scripts/get_source_date_epoch.sh
 
 # 更改 banner
 rm -rf package/base-files/files/etc/banner
@@ -166,15 +172,6 @@ if [ -f "$RUST_FILE" ]; then
 	cd $PKG_PATH && echo "rust has been fixed!"
 fi
 
-#修复DiskMan编译失败
-DM_FILE="./luci-app-diskman/applications/luci-app-diskman/Makefile"
-if [ -f "$DM_FILE" ]; then
-	echo " "
-
-	sed -i '/ntfs-3g-utils /d' $DM_FILE
-
-	cd $PKG_PATH && echo "diskman has been fixed!"
-fi
 
 
 ./scripts/feeds update -a
