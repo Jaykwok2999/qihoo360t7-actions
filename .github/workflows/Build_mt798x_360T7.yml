@@ -30,7 +30,7 @@ jobs:
       - name: Free disk space
         uses: xiangfeidexiaohuo/actions@free-disk
         with:
-          build-mount-path: /home/runner/work/AE86Wrt/AE86Wrt
+          build-mount-path: /home/runner/work/OpenWrt/OpenWrt
 
       - name: Initialization environment
         env:
